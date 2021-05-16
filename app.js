@@ -42,12 +42,14 @@ class App{
         this.workingMatrix = new THREE.Matrix4();
         this.workingVector = new THREE.Vector3();
         
+        this.rightHeld = new THREE.Group()
+
         this.initScene();
         this.setupXR();
         
-        window.addEventListener('resize', this.resize.bind(this) );
+        window.addEventListener('resize', this.resize.bind(this));
         
-        this.renderer.setAnimationLoop( this.render.bind(this) );
+        this.renderer.setAnimationLoop( this.render.bind(this));
 	}	
     
     random( min, max ){
@@ -133,7 +135,8 @@ class App{
             
             const grip = this.renderer.xr.getControllerGrip( i );
             grip.add( controllerModelFactory.createControllerModel( grip ) );
-            this.scene.add( grip );
+            this.rightHeld.add(grip)
+            this.scene.add( this.rightHeld );
         }
         
         return controllers;
