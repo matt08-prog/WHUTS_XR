@@ -173,9 +173,10 @@ class App{
 
             if (intersects.length>0){
                 intersects[0].object.add(this.highlight);
-                this.rightHeld.add(intersects[0].object)
+                controller.add(intersects[0].object)
 
                 console.log(intersects[0].object)
+
                 this.highlight.visible = true;
                 controller.children[0].scale.z = intersects[0].distance;
             }else{
