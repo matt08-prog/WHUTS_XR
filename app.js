@@ -97,6 +97,7 @@ class App{
             
             this.children[0].scale.z = 10;
             this.userData.selectPressed = true;
+            this.rightHeld.add(this.highlight)
         }
 
         function onSelectEnd() {
