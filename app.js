@@ -112,7 +112,6 @@ class App{
             
             this.children[0].scale.z = 10;
             this.userData.selectPressed = true;
-            //this.rightHeld.add(this.highlight)
         }
 
         function onSelectEnd() {
@@ -139,15 +138,17 @@ class App{
         line.name = 'line';
 		line.scale.z = 0;
         
-        this.controllers = [];
+        const controllers = [];
         
         for(let i=0; i<=1; i++){
+            
             const controller = this.renderer.xr.getController( i );
+            
             controller.add( line.clone() );
             controller.userData.selectPressed = false;
             this.scene.add( controller );
             
-            this.controllers.push( controller );
+            controllers.push( controller );
             
             const grip = this.renderer.xr.getControllerGrip( i );
             grip.add( controllerModelFactory.createControllerModel( grip ) );
@@ -155,7 +156,7 @@ class App{
             this.scene.add( this.rightHeld );
         }
         
-        return this.controllers;
+        return controllers;
     }
     
     
@@ -172,7 +173,7 @@ class App{
 
             if (intersects.length>0){
                 intersects[0].object.add(this.highlight);
-                this.controllers.add(intersects[0].object)
+                this.rightHeld.add(intersects[0].object)
 
                 console.log(intersects[0].object)
                 this.highlight.visible = true;
@@ -192,7 +193,7 @@ class App{
 	render( ) {   
         this.stats.update();
         
-        if (this.controllers ){
+        if (this.controllers){
             const self = this;
             this.controllers.forEach( ( controller) => { 
                 self.handleController( controller ) 
