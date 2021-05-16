@@ -68,18 +68,29 @@ class App{
         
         const geometry = new THREE.IcosahedronBufferGeometry( this.radius, 2 );
 
-        for ( let i = 0; i < 800; i ++ ) {
+        // for ( let i = 0; i < 800; i ++ ) {
 
-            const object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+        //     const object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
 
-            object.position.x = this.random( -1, 1 );
-            object.position.y = this.random( -1, 1 );
-            object.position.z = this.random( -1, 1 );
+        //     object.position.x = this.random( -1, 1 );
+        //     object.position.y = this.random( -1, 1 );
+        //     object.position.z = this.random( -1, 1 );
 
-            this.room.add( object );
-        }
-        
-        this.highlight = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.BackSide } ) );
+        //     this.room.add( object );
+        // }
+
+        const object = new THREE.Mesh(
+          geometry,
+          new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
+        );
+        object.position.x = 0
+        object.position.y = 0;
+        object.position.z = 0;
+
+        this.highlight = new THREE.Mesh(
+          geometry,
+          new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.BackSide })
+        );
         this.highlight.scale.set(1.2, 1.2, 1.2);
         this.scene.add(this.highlight);
     }
@@ -124,7 +135,7 @@ class App{
         line.name = 'line';
 		line.scale.z = 0;
         
-        const controllers = [];
+        this.controllers = [];
         
         for(let i=0; i<=1; i++){
             const controller = this.renderer.xr.getController( i );
@@ -132,7 +143,7 @@ class App{
             controller.userData.selectPressed = false;
             this.scene.add( controller );
             
-            controllers.push( controller );
+            this.controllers.push( controller );
             
             const grip = this.renderer.xr.getControllerGrip( i );
             grip.add( controllerModelFactory.createControllerModel( grip ) );
@@ -140,7 +151,7 @@ class App{
             this.scene.add( this.rightHeld );
         }
         
-        return controllers;
+        return this.controllers;
     }
     
     
@@ -157,7 +168,8 @@ class App{
 
             if (intersects.length>0){
                 intersects[0].object.add(this.highlight);
-                this.rightHeld.add(intersects[0].object)
+                this.controllers.add(intersects[0].object)
+
                 console.log(intersects[0].object)
                 this.highlight.visible = true;
                 controller.children[0].scale.z = intersects[0].distance;
