@@ -83,9 +83,13 @@ class App{
           geometry,
           new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
         );
-        object.position.x = 0
+        object.position.x = 1
         object.position.y = 0;
         object.position.z = 0;
+
+        this.room.add(object)
+
+
 
         this.highlight = new THREE.Mesh(
           geometry,
